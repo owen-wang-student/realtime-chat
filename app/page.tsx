@@ -1,24 +1,12 @@
-import { Button } from "@/components/ui/button";
+import { ChatHeader } from "@/components/ChatHeader"
 
 export default function Page() {
   return (
     <div className="max-w-3xl mx-auto md:py-10 h-screen">
       <div className="h-full border rounded-md">
-        <div className="h-20">
-          <div className="p-5 border-b flex flex-row items-center justify-between">
-            
-            <div>
-              <h1 className="text-xl font-bold">Daily Chat</h1>
-              <div className="flex items-center gap-1">
-                <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse" />
-                <h1 className="text-sm text-gray-400">2 online</h1>
-              </div>
-            </div>
+        
+        <ChatHeader />
 
-            <Button>Login</Button>
-
-          </div>
-        </div>
       </div>
     </div> 
   )
