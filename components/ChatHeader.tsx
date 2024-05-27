@@ -25,24 +25,22 @@ export const ChatHeader = ({user}: {user:User | undefined}) => {
   }
 
   return (
-    <div className="h-20">
-      <div className="p-5 border-b flex flex-row items-center justify-between">
-        
-        <div>
-          <h1 className="text-xl font-bold">Daily Chat</h1>
-          <div className="flex items-center gap-1">
-            <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse" />
-            <h1 className="text-sm text-gray-400">2 online</h1>
-          </div>
+    <div className="p-5 border-b flex flex-row items-center justify-between h-20">
+      
+      <div>
+        <h1 className="text-xl font-bold">Daily Chat</h1>
+        <div className="flex items-center gap-1">
+          <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse" />
+          <h1 className="text-sm text-gray-400">2 online</h1>
         </div>
-
-        {user ? 
-          <Button onClick={handleLogout}>Logout</Button> 
-        : 
-          <Button onClick={handleLoginWithGithub}>Login</Button>
-        }
-
       </div>
+
+      {user ? 
+        <Button onClick={handleLogout}>Logout</Button> 
+      : 
+        <Button onClick={handleLoginWithGithub}>Login</Button>
+      }
+
     </div>
   )
 }
