@@ -5,19 +5,68 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
 import { useState } from 'react'
+import { useNavigate } from "react-router-dom"
+import { toast } from "sonner"
+import { apiClient } from "@/lib/api-client"
+import { SIGNUP_ROUTE, LOGIN_ROUTE, TEST_ROUTE } from "@/utils/constants"
 
 const Auth = () => {
 
+  const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
 
-  const handleLogin = async () => {
+  const validateLogin = () => {
+    if(!email.length){
+      toast.error("Email is required")
+      return false
+    }
+    if(!password.length){
+      toast.error("Password is required")
+      return false
+    }
+    return true;
+  }
 
+  const validateSignup = () => {
+    if(!email.length){
+      toast.error("Email is required")
+      return false
+    }
+    if(!password.length){
+      toast.error("Password is required")
+      return false
+    }
+    if(password != confirmPassword){
+      toast.error("Passwords must match")
+      return false
+    }
+    return true;
+  }
+
+  const handleLogin = async () => {
+    if(validateLogin()){
+      const response = await apiClient.post(LOGIN_ROUTE, {email, password}, {withCredentials:true})
+      console.log({response})
+      if(response.status === 200 && response.data.user.id){
+        if(response.data.user.profileSetup){
+          navigate("/chat")
+        }else{
+          navigate("/profile")
+        }
+      }
+    }
   }
 
   const handleSignup = async () => {
-    
+    if(validateSignup()){
+      const response = await apiClient.post(SIGNUP_ROUTE, {email, password}, {withCredentials:true})
+      console.log({response})
+      if(response.status === 201){
+        navigate("/profile")
+      }
+    }
   }
 
   return (
@@ -34,7 +83,7 @@ const Auth = () => {
             </p>
           </div>
           <div className="flex items-center justify-center w-full">
-            <Tabs className="w-3/4">
+            <Tabs className="w-3/4" defaultValue="login">
               <TabsList className="bg-transparent rounded-none w-full">
                 <TabsTrigger value="login" className="data-[state=active]:bg-transparent text-black text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-black data-[state=active]:font-semibold data-[state=active]:border-b-purple-500 transition-all duration-300">Login</TabsTrigger>
                 <TabsTrigger value="signup" className="data-[state=active]:bg-transparent text-black text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-black data-[state=active]:font-semibold data-[state=active]:border-b-purple-500 transition-all duration-300">Signup</TabsTrigger>
