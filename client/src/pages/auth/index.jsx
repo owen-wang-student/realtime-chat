@@ -9,10 +9,12 @@ import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { apiClient } from "@/lib/api-client"
 import { SIGNUP_ROUTE, LOGIN_ROUTE, TEST_ROUTE } from "@/utils/constants"
+import { useAppStore } from "@/store"
 
 const Auth = () => {
 
   const navigate = useNavigate()
+  const { setUserInfo } = useAppStore()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -50,6 +52,7 @@ const Auth = () => {
       const response = await apiClient.post(LOGIN_ROUTE, {email, password}, {withCredentials:true})
       console.log({response})
       if(response.status === 200 && response.data.user.id){
+        setUserInfo(response.data.user)
         if(response.data.user.profileSetup){
           navigate("/chat")
         }else{
@@ -64,6 +67,7 @@ const Auth = () => {
       const response = await apiClient.post(SIGNUP_ROUTE, {email, password}, {withCredentials:true})
       console.log({response})
       if(response.status === 201){
+        setUserInfo(response.data.user)
         navigate("/profile")
       }
     }
