@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { signup, login, getUserInfo, test} from "../controllers/AuthController.js"
+import { signup, login, getUserInfo, updateProfile} from "../controllers/AuthController.js"
 import { verifyToken } from "../middlewares/AuthMiddleware.js"
 
 const authRoutes = Router()
@@ -7,6 +7,6 @@ const authRoutes = Router()
 authRoutes.post("/signup", signup)
 authRoutes.post("/login", login)
 authRoutes.get('/user-info', verifyToken, getUserInfo)
-authRoutes.get("/test", test)
+authRoutes.post("/update-profile", verifyToken, updateProfile)
 
 export default authRoutes

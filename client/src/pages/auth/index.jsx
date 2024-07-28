@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { apiClient } from "@/lib/api-client"
-import { SIGNUP_ROUTE, LOGIN_ROUTE, TEST_ROUTE } from "@/utils/constants"
+import { SIGNUP_ROUTE, LOGIN_ROUTE } from "@/utils/constants"
 import { useAppStore } from "@/store"
 
 const Auth = () => {
